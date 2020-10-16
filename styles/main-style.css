@@ -1,0 +1,45 @@
+em {
+    font-weight: bold;
+    color: #f00;
+}
+a{
+    text-decoration: none;
+    color: currentColor;
+}
+a:visited{
+    color: currentColor;
+}
+
+input{
+    padding:5px;
+    margin:10px;
+}
+.formlabel {
+    display: inline-block;
+    width: 200px; 
+}
+
+.main-menu {
+    border-bottom: 2px solid black;
+    border-top: 2px solid black;
+    margin: 20px 0;
+    box-sizing: border-box;
+}
+.main-menu-item {
+    display: inline-block;
+    text-align: center;
+    width: 150px; /* Width of labels */
+    padding: 5px;
+}
+.main-menu-item:hover{
+    color: red;
+    background-color: yellow;
+    border: 5px solid red;
+    margin: -5px;
+}
+
+.floating-object{
+    float: left;
+    margin-right: 10px; 
+}
+
