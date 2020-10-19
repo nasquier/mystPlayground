@@ -38,8 +38,17 @@ input{
     margin: -5px;
 }
 
-.floating-object{
+.float-left{
     float: left;
     margin-right: 10px; 
+}
+.profile-pic{
+    float: right;
+    margin-right: 30px; 
+    object-fit: cover;
+    width:80px;
+    height:80px;
+    border: black solid 1px;
+    border-radius: 190px;
 }
 

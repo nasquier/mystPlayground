@@ -6,7 +6,10 @@
 	<title> myst </title>
 </head>
 <body>
-	<?php include('header.php'); include('main-menu.php'); ?>
+	<?php 
+	include('parts/header.php'); 
+	include('parts/main-menu.php'); 
+	?>
 	<form method='post' action='register-process.php' enctype='multipart/form-data'>
 		<fieldset>
 			<legend> Register form </legend>

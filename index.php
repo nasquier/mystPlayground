@@ -6,6 +6,9 @@
         <title>myst</title>
     </head>
     <body>
-        <?php include('header.php'); include('main-menu.php'); ?>
+	<?php 
+    include('parts/header.php'); 
+    include('parts/main-menu.php'); 
+	?>
     </body>
 </html>

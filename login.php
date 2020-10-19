@@ -6,8 +6,11 @@
 	<title> myst </title>
 </head>
 <body>
-	<?php include('header.php'); include('main-menu.php'); ?>
-	<form method='post' action='login.php'>
+	<?php 
+	include('parts/header.php'); 
+	include('parts/main-menu.php'); 
+	?>
+	<form method='post' action='login-process.php'>
 		<fieldset>
 			<legend> Sign in form </legend>
 			<label class='formlabel'> Username </label>
