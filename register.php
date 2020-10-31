@@ -4,31 +4,39 @@ if (!empty($_POST)){
 	$email = htmlspecialchars($_POST['email']);
 	$password = htmlspecialchars($_POST['password']);
 
-
-	$file = 'users.csv';
-	if (!file_exists($file)){
-		$users_file = fopen($file, 'a+');
-		fputcsv($users_file,array('username','email','password','picture'));
-		fclose($users_file);
+	try{
+		$bdd = new PDO('mysql:host=localhost;dbname=mystWebsite;charset=utf8','root', '');
 	}
-	$users_file = fopen($file, 'a+');
-	$fields = fgetcsv($users_file);
-
-	$user_inputs = array_fill(0, count($fields), "");
-	$user_inputs[array_search('username', $fields)] = $username;
-	$user_inputs[array_search('email', $fields)] = $email;
-	$user_inputs[array_search('password', $fields)] = $password;
-
-	if (isset($_FILES['profilepic']) AND $_FILES['profilepic']['error'] == 0 AND $_FILES['profilepic']['size'] < 1000000){
-		$picturepath = 'profile-pictures/'.$username.'_'.basename($_FILES['profilepic']['name']);
-		move_uploaded_file($_FILES['profilepic']['tmp_name'], $picturepath);
-		$user_inputs[array_search('picture', $fields)]=$picturepath;
+	catch (Exception $e)
+	{
+		die('Erreur : ' . $e->getMessage());
 	}
+	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	ini_set('display_errors','on');
+	error_reporting(E_ALL);
 
-	fputcsv($users_file,$user_inputs);
-	fclose($users_file);
 
-	$message = 'Successfully registered as '.$username.'.';
+	$users_list = $bdd->prepare('SELECT * FROM users WHERE username=?');
+	$users_list->execute(array($username));
+
+	if ($users_list->rowCount()){
+		$message = "This username is already taken.";
+	} else {
+		$picture_path = '';
+		if (isset($_FILES['profilepic']) AND $_FILES['profilepic']['error'] == 0 AND $_FILES['profilepic']['size'] < 1000000){
+			$picture_path = 'profile-pictures/'.$username.'_'.basename($_FILES['profilepic']['name']);
+			move_uploaded_file($_FILES['profilepic']['tmp_name'], $picture_path);
+		}
+
+		$query = $bdd->prepare('INSERT INTO users (username, email, password, picture_path) VALUES (:username, :email, :password, :picture_path);');
+		$query->execute(array(
+			'username'=>$username,
+			'email'=>$email,
+			'password'=>$password,
+			'picture_path'=>$picture_path));
+
+		$message = 'Successfully registered as '.$username.'.';
+	}
 }
 ?>
 
@@ -48,28 +56,28 @@ if (!empty($_POST)){
 		<fieldset>
 			<legend> Register form </legend>
 			<p> Mandatory fields are marked with <em>*</em>.</p>
+
 			<label class='formlabel'> Username <em>*</em></label>
-			<input type='text' name='username' required pattern="^[a-zA-Z\d_-]{4,20}$" 
-			title="Rules :&#10-Between 4 and 20 characters.&#10-Only alphanumerics and dashes"/><br/>
+			<input type='text' name='username' 
+			<?php if (isset($username)) echo('value="'.$username.'"'); ?> 
+			required pattern="^[a-zA-Z\d_-]{4,20}$" title="Rules :&#10-Between 4 and 20 characters.&#10-Only alphanumerics and dashes"/><br/>
+
 			<label class='formlabel'> Email <em>*</em></label>
-			<input type='email' name='email' maxlength=100 required
-			title="Please enter a valid email adress."/><br/>
+			<input type='email' name='email'
+			<?php if (isset($email)) echo('value="'.$email.'"'); ?>  
+			maxlength=100 required title="Please enter a valid email adress."/><br/>
+
 			<label class='formlabel'> Profile picture </label>
 			<input type='file' name='profilepic' accept='image/*'
 			title="Files over 1 Mo will be ignored."/><br/>
+
 			<label class='formlabel'> Password <em>*</em></label>
 			<input type='password' name='password' 
 			required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[@$!%+*#?&])[a-zA-Z\d@$!%*#?&]{8,100}$"
 			title="Rules :&#10-At least eight characters.&#10-At least one lowercase letter&#10-At least one uppercase letter&#10-At least one number&#10-At least one special character."/><br/>
-			<!-- <input type='password' name='password' 
-			title="No required pattern for test purposes."/><br/> -->
 
 			<p><input type='submit' value='Submit' />
-				<?php 
-				if (isset($message)){
-					echo($message);
-				}
-				?>
+				<em> <?php if (isset($message)) echo($message); ?> </em>
 			</p>
 		</fieldset>
 	</form>

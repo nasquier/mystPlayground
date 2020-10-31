@@ -3,37 +3,23 @@ if (!empty($_POST)){
 	$username = htmlspecialchars($_POST['username']);
 	$password = htmlspecialchars($_POST['password']);
 
-	$file = 'users.csv';
-	if (!file_exists($file)){
-		$users_file = fopen($file, 'a+');
-		fputcsv($users_file,array('username','email','password','picture'));
-		fclose($users_file);
+	try{
+		$bdd = new PDO('mysql:host=localhost;dbname=mystWebsite;charset=utf8','root', '');
 	}
-	$users_file = fopen($file, 'a+');
-	$fields = fgetcsv($users_file);
-
-	$username_index = array_search('username', $fields);
-	$password_index = array_search('password', $fields);
-	$picture_index = array_search('picture', $fields);
-
-	$username_found = False;
-	$password_ok = False;
-	while (!$password_ok && !feof($users_file)){
-		$fields = fgetcsv($users_file);
-		if ($fields[$username_index] == $username){
-			$username_found = True;
-			if ($fields[$password_index] == $password){
-				$password_ok = True;
-			}
-		}
+	catch (Exception $e)
+	{
+		die('Erreur : ' . $e->getMessage());
 	}
-	fclose($users_file);
 
-	if ($username_found){
-		if ($password_ok){
+	$users_list = $bdd->prepare('SELECT * FROM users WHERE username=?');
+	$users_list->execute(array($username));
+
+	if ($users_list->rowCount()){
+		$users_list = $users_list->fetch();
+		if ($users_list['password']==$password){
 			session_start();
-			$_SESSION["user_connected"] = $fields[$username_index];
-			$_SESSION["user_picture"] = $fields[$picture_index];
+			$_SESSION["user_connected"] = $users_list['username'];
+			$_SESSION["user_picture"] = $users_list['picture_path'];
 			if ($_SESSION["user_picture"]==""){
 				$_SESSION["user_picture"]="profile-pictures/default.jpg";
 			}
@@ -66,9 +52,7 @@ if (!empty($_POST)){
 			<legend> Sign in form </legend>
 			<label class='formlabel'> Username </label>
 			<input type='text' name='username' required
-				<?php
-					if (isset($username)) echo('value="'.$username.'"');
-				?>
+			<?php if (isset($username)) echo('value="'.$username.'"'); ?>
 			/><br/>
 			<label class='formlabel'> Password </label>
 			<input type='password' name='password' required/><br/>
