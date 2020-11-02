@@ -1,10 +1,16 @@
 em {
     font-weight: bold;
     color: #f00;
+    text-decoration: none;
 }
 a{
     text-decoration: none;
     color: currentColor;
+}
+table, th, td{
+    font-weight: normal;
+    text-align: justify;
+    vertical-align: top;
 }
 a:visited{
     color: currentColor;
@@ -19,25 +25,27 @@ input{
     width: 200px; 
 }
 
+/* MAIN MENU */
 .main-menu {
     border-bottom: 2px solid black;
     border-top: 2px solid black;
     margin: 20px 0;
-    box-sizing: border-box;
 }
-.main-menu-item {
+.main-menu>label{
     display: inline-block;
     text-align: center;
     width: 150px; /* Width of labels */
     padding: 5px;
 }
-.main-menu-item:hover{
+.main-menu>label:hover{
     color: red;
     background-color: yellow;
     border: 5px solid red;
     margin: -5px;
 }
 
+
+/* IMAGES */
 .float-left{
     float: left;
     margin-right: 10px; 
@@ -52,3 +60,33 @@ input{
     border-radius: 190px;
 }
 
+
+
+/* CV */
+.cv {
+    font-family: 'Lato';
+    width : 21cm;
+}
+.cv-header {
+    vertical-align: middle;
+    font-weight: bold;
+    color: white;
+    background-color: #10B878;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.cv-body{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.cv strong {
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    background-color: #10B878;
+}
+.cv .cv-bull {
+    text-align: center;
+}
