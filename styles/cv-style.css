@@ -1,0 +1,102 @@
+/* CV */
+.cv {
+    font-family: 'Lato';
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    min-width: 900px;
+    margin: auto;
+    overflow: auto;
+    word-wrap: break-word;
+}
+.cv-header {
+    border-radius: 10px;
+    font-weight: bold;
+    color: white;
+    background-color: #10B878;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    text-align: right;
+}
+.cv-photo{
+    width: 20%;
+    text-align: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin : 0px;
+    padding: 0px;
+}
+.cv-title{
+    margin: auto;
+}
+.cv-title *{
+    text-align: center;
+    margin : 0px;
+    padding: 0px;
+
+}
+.cv-body{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.cv-skills{
+    width: 40%;
+    margin-right: 20px;
+}
+
+.cv strong {
+    font-size: larger;
+    border-radius: 10px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    background-color: #10B878;
+    margin-top: 20px;
+    padding: 10px 0px;
+}
+.cv table{
+    width:100%;
+    margin-top: 20px;
+
+}
+.cv th{
+    padding: 2px;
+    vertical-align: center;
+    justify-content: center;
+}
+.bull-col {
+    text-align: center;
+    width: 50%;
+    /*font-size: x-large;*/
+}
+.date-col{
+    text-align: left;
+    width: 15%;
+
+}
+.dot-filled{
+  height: 10px;
+  width: 10px;
+  background-color: black;
+  border: 1px solid black;
+  border-radius: 50%;
+  display: inline-block;
+
+}
+.dot-empty{
+  height: 10px;
+  width: 10px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 50%;
+  display: inline-block;
+
+}

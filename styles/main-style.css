@@ -59,34 +59,3 @@ input{
     border: black solid 1px;
     border-radius: 190px;
 }
-
-
-
-/* CV */
-.cv {
-    font-family: 'Lato';
-    width : 21cm;
-}
-.cv-header {
-    vertical-align: middle;
-    font-weight: bold;
-    color: white;
-    background-color: #10B878;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-}
-.cv-body{
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-}
-.cv strong {
-    text-align: center;
-    font-weight: bold;
-    color: white;
-    background-color: #10B878;
-}
-.cv .cv-bull {
-    text-align: center;
-}

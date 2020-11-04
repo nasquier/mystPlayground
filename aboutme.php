@@ -11,6 +11,7 @@ if (isset($_SESSION["user_connected"])){
 <head>
     <meta charset='utf-8' />
     <link rel='stylesheet' href='styles/main-style.css' />
+    <link rel='stylesheet' href='styles/cv-style.css' />
     <title>myst</title>
 </head>
 <body>
