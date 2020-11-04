@@ -1,87 +1,121 @@
 /* CV */
 .cv {
-    font-family: 'Lato';
-    text-align: justify;
+    font-family: 'Lato',sans-serif;
+    text-align: left;
+    color: black;
+    background-color: white;
+
     display: flex;
     flex-direction: column;
-    width: 60%;
-    min-width: 900px;
-    margin: auto;
     overflow: auto;
     word-wrap: break-word;
+
+    width: 60%;
+    min-width: 21cm;
+    margin: auto;
+    padding: 20px;
 }
+
+
 .cv-header {
-    border-radius: 10px;
     font-weight: bold;
     color: white;
     background-color: #10B878;
+
+    border-radius: 10px;
+    padding: 20px;
+
     display: flex;
     justify-content: space-between;
-    padding: 20px;
-    text-align: right;
+    align-items: stretch;
+}
+.cv-header>div{
+    display: inline-block;
+    flex:1 1 auto;
+    height: 100%;
 }
 .cv-photo{
-    width: 20%;
-    text-align: center;
+    width: 25%;
+    min-width: 5cm;
+    text-align: left;
     justify-content: center;
     vertical-align: middle;
-    margin : 0px;
-    padding: 0px;
+    align-items: center;
 }
 .cv-title{
-    margin: auto;
+    text-align: center;
+    vertical-align: middle;
 }
 .cv-title *{
-    text-align: center;
     margin : 0px;
     padding: 0px;
-
 }
+.cv-contact {
+    text-align: right;
+    display: inline;
+    padding: 0px;
+}
+
 .cv-body{
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
-    width: 100%;
 }
-
 .cv-skills{
     width: 40%;
+    min-width: 5cm;
     margin-right: 20px;
+}
+.cv-main-skills{
+    text-align: center;
+    font-weight: bold;
+}
+
+.cv a:hover{
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 2px;
+    margin: -4px;
+}
+.cv-publi a{
+    display: inline-block;
+    padding:0;
+    margin:0;
 }
 
 .cv strong {
-    font-size: larger;
-    border-radius: 10px;
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-    font-weight: bold;
     color: white;
     background-color: #10B878;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+
+    width: 100%;
+    border-radius: 10px;
     margin-top: 20px;
     padding: 10px 0px;
+
+    display: flex;
+    justify-content: center;
 }
 .cv table{
     width:100%;
     margin-top: 20px;
-
 }
 .cv th{
     padding: 2px;
     vertical-align: center;
     justify-content: center;
 }
-.bull-col {
+.cv-bull-col {
     text-align: center;
     width: 50%;
-    /*font-size: x-large;*/
 }
-.date-col{
+.cv-date-col{
     text-align: left;
     width: 15%;
-
 }
+
+
 .dot-filled{
   height: 10px;
   width: 10px;
@@ -94,9 +128,8 @@
 .dot-empty{
   height: 10px;
   width: 10px;
-  background-color: white;
+  background-color: transparent;
   border: 1px solid black;
   border-radius: 50%;
   display: inline-block;
-
 }

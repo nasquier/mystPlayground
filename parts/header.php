@@ -4,7 +4,7 @@ if(!isset($_SESSION)) {
 }  
 ?>
 <header>
-
+	<h1><a href='index.php'>my sick website</a></h1>
 	<?php 
 	if (isset($_SESSION["user_connected"])){
 		?>
@@ -15,7 +15,4 @@ if(!isset($_SESSION)) {
 		<?php	
 	}
 	?>
-
-	<h1>myst dope website</h1>
-	<p>Date and time are <?php echo date('d/m/Y, h:i:s'); ?>. You're welcome.</p>
 </header>

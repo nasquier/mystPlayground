@@ -47,21 +47,23 @@ if (!empty($_POST)){
 	include('parts/header.php'); 
 	include('parts/main-menu.php'); 
 	?>
-	<form method='post' action='login.php'>
-		<fieldset>
-			<legend> Sign in form </legend>
-			<label class='formlabel'> Username </label>
-			<input type='text' name='username' required
-			<?php if (isset($username)) echo('value="'.$username.'"'); ?>
-			/><br/>
-			<label class='formlabel'> Password </label>
-			<input type='password' name='password' required/><br/>
-			<p><input type='submit' value='Sign in' />
-				<em> <?php if (isset($error_message)) echo($error_message); ?> </em>
-			</p>
-		</fieldset>
-	</form>
-	<p> New member ?   <a href="register.php"><input type="button" value="Register here"/></a> </p>
+	<section>
+		<form method='post' action='login.php'>
+			<fieldset>
+				<legend> Sign in form </legend>
+				<label class='formlabel'> Username </label>
+				<input type='text' name='username' required
+				<?php if (isset($username)) echo('value="'.$username.'"'); ?>
+				/><br/>
+				<label class='formlabel'> Password </label>
+				<input type='password' name='password' required/><br/>
+				<p><input type='submit' value='Sign in' />
+					<em> <?php if (isset($error_message)) echo($error_message); ?> </em>
+				</p>
+			</fieldset>
+		</form>
+		<p> New member ?   <a href="register.php"><input type="button" value="Register here"/></a> </p>
+	</section>
 </body>
 </html>
 

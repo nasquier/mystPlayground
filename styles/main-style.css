@@ -1,46 +1,124 @@
-em {
-    font-weight: bold;
-    color: #f00;
-    text-decoration: none;
+:root {
+  --hoverlines: #EE5804;
+  --defaultbgc: #0D1C31;
+  --hoverbgc: #142B4C;
 }
+
+body{
+    color: white;
+    background-color: var(--defaultbgc);
+    font-family: "Calibri", sans-serif;
+}
+header {
+    padding: 10px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+header h1{
+    font-family: maiden, sans-serif;
+    font-size : 5em;
+
+    text-align: center;
+    color: white;
+    background-color: var(--defaultbgc);
+
+    border: 5px white solid;
+    border-radius: 10px;
+
+    width: 500px;
+
+    margin: auto;
+    padding: 10px;
+}
+header h1:hover{
+    color: var(--hoverlines);
+    background-color: var(--hoverbgc);
+    border: 5px var(--hoverlines) solid;
+}
+
+section{
+    background-color: var(--defaultbgc);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    border: 5px white solid;
+    border-radius: 10px;
+    padding: 10px;
+    width: 60%;
+    min-width: 500px;
+    margin: auto;
+    margin-bottom: 20px;
+
+    overflow: auto;
+    word-wrap: break-word;
+}
+fieldset{
+    border: none;
+}
+fieldset legend{
+    font-size:x-large;
+}
+
+em {
+    font-style: normal;
+    font-size: larger;
+    font-weight: bold;
+    color: var(--hoverlines);
+}
+
 a{
     text-decoration: none;
     color: currentColor;
+}
+input{
+    padding:5px;
+    margin:10px;
 }
 table, th, td{
     font-weight: normal;
     text-align: justify;
     vertical-align: top;
 }
-a:visited{
-    color: currentColor;
-}
-
-input{
-    padding:5px;
-    margin:10px;
-}
 .formlabel {
     display: inline-block;
     width: 200px; 
 }
 
+/* FONTS */
+@font-face {
+    font-family: 'maiden';
+    src: url('../fonts/maiden.ttf');
+}
+
 /* MAIN MENU */
 .main-menu {
-    border-bottom: 2px solid black;
-    border-top: 2px solid black;
-    margin: 20px 0;
+    font-weight: bold;
+    font-size: larger;
+    display: flex;
+    border: 5px solid white;
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 70%;
+    min-width: 500px;
+    justify-content: space-evenly;
+    align-items: stretch;
 }
 .main-menu>label{
     display: inline-block;
     text-align: center;
-    width: 150px; /* Width of labels */
     padding: 5px;
+    flex:1 1 auto;
 }
 .main-menu>label:hover{
-    color: red;
-    background-color: yellow;
-    border: 5px solid red;
+    color: var(--hoverlines);
+    background-color: var(--hoverbgc);
+    border: 5px solid var(--hoverlines);
+    border-radius: 10px;
     margin: -5px;
 }
 
@@ -52,10 +130,12 @@ input{
 }
 .profile-pic{
     float: right;
-    margin-right: 30px; 
-    object-fit: cover;
-    width:80px;
-    height:80px;
-    border: black solid 1px;
-    border-radius: 190px;
+    margin: 0 30px; 
+    border: white solid 3px;
+    border-radius: 50%;
+    height: 100px;
+    width: auto;
+}
+.profile-pic:hover{
+    border: var(--hoverlines) solid 3px;
 }
