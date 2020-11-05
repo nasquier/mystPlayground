@@ -8,7 +8,7 @@ if(!isset($_SESSION)) {
 	<?php 
 	if (isset($_SESSION["user_connected"])){
 		?>
-		<a href="index.php">
+		<a href="accountmanagement.php">
 			<img class='profile-pic' src=<?php echo('"'.htmlspecialchars($_SESSION["user_picture"]).'"');?> title='It&#039s you!'/> 
 		</a>
 

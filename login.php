@@ -19,6 +19,7 @@ if (!empty($_POST)){
 		if ($users_list['password']==$password){
 			session_start();
 			$_SESSION["user_connected"] = $users_list['username'];
+			$_SESSION["user_email"] = $users_list['email'];
 			$_SESSION["user_picture"] = $users_list['picture_path'];
 			if ($_SESSION["user_picture"]==""){
 				$_SESSION["user_picture"]="profile-pictures/default.jpg";
