@@ -22,18 +22,18 @@ if (!empty($_POST)){
 	if ($users_list->rowCount()){
 		$message = "This username is already taken.";
 	} else {
-		$picture_path = '';
-		if (isset($_FILES['profilepic']) AND $_FILES['profilepic']['error'] == 0 AND $_FILES['profilepic']['size'] < 1000000){
-			$picture_path = 'profile-pictures/'.$username.'_'.basename($_FILES['profilepic']['name']);
-			move_uploaded_file($_FILES['profilepic']['tmp_name'], $picture_path);
+		$pfp_path = '';
+		if (isset($_FILES['pfp']) AND $_FILES['pfp']['error'] == 0 AND $_FILES['pfp']['size'] < 1000000){
+			$pfp_path = 'pfp/'.$username.'.'.pathinfo($_FILES['pfp']['name'],PATHINFO_EXTENSION);
+			move_uploaded_file($_FILES['pfp']['tmp_name'], $pfp_path);
 		}
 
-		$query = $bdd->prepare('INSERT INTO users (username, email, password, picture_path) VALUES (:username, :email, :password, :picture_path);');
+		$query = $bdd->prepare('INSERT INTO users (username, email, password, pfp_path) VALUES (:username, :email, :password, :pfp_path);');
 		$query->execute(array(
 			'username'=>$username,
 			'email'=>$email,
 			'password'=>$password,
-			'picture_path'=>$picture_path));
+			'pfp_path'=>$pfp_path));
 
 		$message = 'Successfully registered as '.$username.'.';
 	}
@@ -69,7 +69,7 @@ if (!empty($_POST)){
 				maxlength=100 required title="Please enter a valid email adress."/><br/>
 
 				<label class='formlabel'> Profile picture </label>
-				<input type='file' name='profilepic' accept='image/*'
+				<input type='file' name='pfp' accept='image/*'
 				title="Files over 1 Mo will be ignored."/><br/>
 
 				<label class='formlabel'> Password <em>*</em></label>

@@ -18,11 +18,11 @@ if (!empty($_POST)){
 		$users_list = $users_list->fetch();
 		if ($users_list['password']==$password){
 			session_start();
-			$_SESSION["user_connected"] = $users_list['username'];
+			$_SESSION["username"] = $users_list['username'];
 			$_SESSION["user_email"] = $users_list['email'];
-			$_SESSION["user_picture"] = $users_list['picture_path'];
-			if ($_SESSION["user_picture"]==""){
-				$_SESSION["user_picture"]="profile-pictures/default.jpg";
+			$_SESSION["user_pfp"] = $users_list['pfp_path'];
+			if ($_SESSION["user_pfp"]==""){
+				$_SESSION["user_pfp"]="images/default-pfp.jpg";
 			}
 			header("Location: index.php");			
 			exit();
@@ -46,7 +46,7 @@ if (!empty($_POST)){
 <body>
 	<?php 
 	include('parts/header.php'); 
-	include('parts/main-menu.php'); 
+	include('parts/main-menu.php');
 	?>
 	<section>
 		<form method='post' action='login.php'>

@@ -6,10 +6,10 @@ if(!isset($_SESSION)) {
 <header>
 	<h1><a href='index.php'>my sick website</a></h1>
 	<?php 
-	if (isset($_SESSION["user_connected"])){
+	if (isset($_SESSION["username"])){
 		?>
-		<a href="accountmanagement.php">
-			<img class='profile-pic' src=<?php echo('"'.htmlspecialchars($_SESSION["user_picture"]).'"');?> title='It&#039s you!'/> 
+		<a href="manageaccount.php">
+			<img class='profile-pic' src=<?php echo('"'.htmlspecialchars($_SESSION["user_pfp"]).'"');?> title='It&#039s you!'/> 
 		</a>
 
 		<?php	
