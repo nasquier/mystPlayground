@@ -9,7 +9,7 @@ if(!isset($_SESSION)) {
 	if (isset($_SESSION["username"])){
 		?>
 		<a href="manageaccount.php">
-			<img class='profile-pic' src=<?php echo('"'.htmlspecialchars($_SESSION["user_pfp"]).'"');?> title='It&#039s you!'/> 
+			<img class='roundpic' src=<?php echo('"'.htmlspecialchars($_SESSION["user_pfp"]).'"');?> title='It&#039s you!'/> 
 		</a>
 
 		<?php	

@@ -52,11 +52,11 @@ if (!empty($_POST)){
 		<form method='post' action='login.php'>
 			<fieldset>
 				<legend> Sign in form </legend>
-				<label class='formlabel'> Username </label>
+				<label> Username </label>
 				<input type='text' name='username' required
 				<?php if (isset($username)) echo('value="'.$username.'"'); ?>
 				/><br/>
-				<label class='formlabel'> Password </label>
+				<label> Password </label>
 				<input type='password' name='password' required/><br/>
 				<p><input type='submit' value='Sign in' />
 					<em> <?php if (isset($error_message)) echo($error_message); ?> </em>

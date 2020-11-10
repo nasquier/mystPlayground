@@ -98,27 +98,27 @@ if (!empty($_POST)){
 			<fieldset>
 				<legend> <?php echo($_SESSION["username"]); ?>'s account management </legend>
 
-				<label class='formlabel'> Username </label>
+				<label> Username </label>
 				<input type='text' name='username' readonly title='Non-editable' value=<?php echo("'".$_SESSION["username"]."'");?> ><br/>
 
-				<label class='formlabel'> Email </label>
+				<label> Email </label>
 				<input type='email' name='email'
 				value=<?php if (isset($email)) echo("'".$email."'"); else echo("'".$_SESSION["user_email"]."'"); ?> 
 				maxlength=100  title="Please enter a valid email adress."/><br/>
 
-				<label class='formlabel'> Profile picture </label>
+				<label> Profile picture </label>
 				<input type='file' name='pfp' accept='image/*'
 				title="Files over 1 Mo will be ignored."/>
 				<input type='checkbox' name='rm_pfp' id='rm_pfp'
 				title="Check this if you want to remove your profile picture"/> Remove profile picture<br/>
 
-				<label class='formlabel'> New password </label>
+				<label> New password </label>
 				<input type='password' name='new_password' 
 				pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[@$!%+*#?&])[a-zA-Z\d@$!%*#?&]{8,100}$"
 				title="Rules :&#10-At least eight characters.&#10-At least one lowercase letter&#10-At least one uppercase letter&#10-At least one number&#10-At least one special character."/>
 				<br/><br/><br/><br/><br/>
 
-				<label class='formlabel'> Current password <em>*</em></label>
+				<label> Current password <em>*</em></label>
 				<input type='password' name='password' required title="Type your current password to update your information."/><br/>
 
 				<p>

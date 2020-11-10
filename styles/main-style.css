@@ -3,12 +3,25 @@
   --defaultbgc: #0D1C31;
   --hoverbgc: #142B4C;
 }
-
-body{
-    color: white;
-    background-color: var(--defaultbgc);
-    font-family: "Calibri", sans-serif;
+em {
+    font-style: normal;
+    font-size: larger;
+    font-weight: bold;
+    color: var(--hoverlines);
 }
+strong{
+    font-style: normal;
+    font-size: x-large;
+    font-weight: bold;
+    color: red;
+}
+a{
+    text-decoration: none;
+    color: currentColor;
+}
+
+
+/* HEADER */
 header {
     padding: 10px;
     height: 200px;
@@ -39,6 +52,18 @@ header h1:hover{
     border: 5px var(--hoverlines) solid;
 }
 
+/* BODY */
+body{
+    color: white;
+    background-color: var(--defaultbgc);
+    font-family: "Calibri", sans-serif;
+}
+.home-message{
+    text-align: center;
+    clear : both;
+}
+
+/* PARTS*/
 section{
     background-color: var(--defaultbgc);
 
@@ -50,7 +75,7 @@ section{
     border-radius: 10px;
     padding: 10px;
     width: 60%;
-    min-width: 500px;
+    min-width: 700px;
     margin: 20px auto;
 
     overflow: auto;
@@ -62,46 +87,45 @@ fieldset{
 fieldset legend{
     font-size:x-large;
 }
-
-em {
-    font-style: normal;
-    font-size: larger;
-    font-weight: bold;
-    color: var(--hoverlines);
+.guestbookpost {
+    margin: auto;
+    width: 500px;  
+    text-align: right;
 }
-strong{
-    font-style: normal;
-    font-size: x-large;
-    font-weight: bold;
-    color: red;
+.guestbookpost .message{
+    margin: auto;
+    width: 500px; 
+    height: 100px; 
 }
-
-a{
-    text-decoration: none;
-    color: currentColor;
+.guestbookpost .button{
+    text-align: right;
 }
-input{
+.guestbook-author{
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+}
+.guestbook-pfp{
+    width: 25%;
+    display: block;
+    text-align: center;
+    vertical-align: middle;
+}
+.guestbook-entry .roundpic{
+    margin: 5px;
+}
+form input{
     padding:5px;
     margin:10px;
+}
+form label {
+    display: inline-block;
+    width: 200px; 
 }
 table, th, td{
     font-weight: normal;
     text-align: justify;
     vertical-align: top;
-}
-.formlabel {
-    display: inline-block;
-    width: 200px; 
-}
-.home-message{
-    text-align: center;
-    clear : both;
-}
-
-/* FONTS */
-@font-face {
-    font-family: 'maiden';
-    src: url('../fonts/maiden.ttf');
 }
 
 /* MAIN MENU */
@@ -113,14 +137,14 @@ table, th, td{
     border-radius: 10px;
     margin: 20px auto;
     width: 70%;
-    min-width: 500px;
+    min-width: 800px;
     justify-content: space-evenly;
     align-items: stretch;
 }
 .main-menu>label{
     display: inline-block;
     text-align: center;
-    padding: 5px;
+    padding: 10px;
     flex:1 1 auto;
 }
 .main-menu>label:hover{
@@ -137,8 +161,7 @@ table, th, td{
     float: left;
     margin-right: 10px; 
 }
-.profile-pic{
-    float: right;
+.roundpic{
     margin: 0 30px; 
     border: white solid 3px;
     border-radius: 50%;
@@ -146,6 +169,15 @@ table, th, td{
     width: auto;
     max-width: 100px;
 }
-.profile-pic:hover{
+header .roundpic{
+    float: right;
+}
+header .roundpic:hover{
     border: var(--hoverlines) solid 3px;
+}
+
+/* FONTS */
+@font-face {
+    font-family: 'maiden';
+    src: url('../fonts/maiden.ttf');
 }
