@@ -1,26 +1,17 @@
 <?php 
+include('include/manage-db.php');
 if (!empty($_POST)){
 	$username = htmlspecialchars($_POST['username']);
 	$email = htmlspecialchars($_POST['email']);
 	$password = htmlspecialchars($_POST['password']);
 
-	try{
-		$bdd = new PDO('mysql:host=localhost;dbname=mystWebsite;charset=utf8','root', '');
-	}
-	catch (Exception $e)
-	{
-		die('Erreur : ' . $e->getMessage());
-	}
-	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	ini_set('display_errors','on');
-	error_reporting(E_ALL);
+	$bdd = getdb();
 
-
-	$users_list = $bdd->prepare('SELECT * FROM users WHERE username=?');
-	$users_list->execute(array($username));
+	$users_list = $bdd->prepare('SELECT * FROM users WHERE username=? OR email=?');
+	$users_list->execute(array($username,$email));
 
 	if ($users_list->rowCount()){
-		$message = "This username is already taken.";
+		$message = "Username or email adress already taken.";
 	} else {
 		$pfp_path = '';
 		if (isset($_FILES['pfp']) AND $_FILES['pfp']['error'] == 0 AND $_FILES['pfp']['size'] < 1000000){

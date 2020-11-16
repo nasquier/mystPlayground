@@ -5,6 +5,7 @@ if(!isset($_SESSION)) {
 ?>
 <nav class='main-menu'>
 	<label><a href='../index.php'> Home </a></label>
+	<label><a href='../news.php'> News </a></label>
 	<label><a href='../aboutme.php'> About me </a></label>
 	<label><a href='../index.php'> Play a game </a></label>
 	<label><a href='../info.php'> PHP info </a></label>

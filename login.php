@@ -1,16 +1,10 @@
 <?php 
+include('include/manage-db.php');
 if (!empty($_POST)){
 	$username = htmlspecialchars($_POST['username']);
 	$password = htmlspecialchars($_POST['password']);
 
-	try{
-		$bdd = new PDO('mysql:host=localhost;dbname=mystWebsite;charset=utf8','root', '');
-	}
-	catch (Exception $e)
-	{
-		die('Erreur : ' . $e->getMessage());
-	}
-
+	$bdd = getdb();
 	$users_list = $bdd->prepare('SELECT * FROM users WHERE username=?');
 	$users_list->execute(array($username));
 

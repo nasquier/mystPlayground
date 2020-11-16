@@ -4,7 +4,7 @@ if(!isset($_SESSION)) {
 }  
 ?>
 <header>
-	<h1><a href='index.php'>my sick website</a></h1>
+	<h1><a href='index.php'>myst playground</a></h1>
 	<?php 
 	if (isset($_SESSION["username"])){
 		?>

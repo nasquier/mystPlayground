@@ -1,14 +1,10 @@
 <?php  
+include('include/manage-db.php');
 if(!isset($_SESSION)) { 
     session_start(); 
 }
 
-try{
-    $bdd = new PDO('mysql:host=localhost;dbname=mystWebsite;charset=utf8','root', '');
-} catch (Exception $e) {
-    die('Erreur : ' . $e->getMessage());
-}
-
+$bdd = getdb();
 if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['message'])) { 
     $username = htmlspecialchars($_SESSION["username"]);
     $query = $bdd->prepare('SELECT id FROM users WHERE username=?');
@@ -39,8 +35,8 @@ if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['message'])) {
         ?>
         <section>
             <form method='post' action='guestbook.php'>
-                <fieldset class='guestbookpost'>
-                    <textarea name = 'message' class='message' rows='500' cols='100' maxlength='500' required/></textarea><br/>
+                <fieldset class='postfieldset'>
+                    <textarea name='message' class='message' rows='100' cols='100' maxlength='500' required/></textarea><br/>
                     <input class='button' type='submit' value='Send'/>
                 </fieldset>
             </form>
@@ -71,9 +67,9 @@ if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['message'])) {
                 if ($author_pfp_path == ""){
                     $author_pfp_path = "images/default-pfp.jpg";
                 }
-                echo("<div class='guestbook-author'>");
+                echo("<div class='post-author'>");
                 
-                echo("<div class='guestbook-pfp'>");
+                echo("<div class='post-pfp'>");
                 echo("<img class='roundpic' src='".$author_pfp_path."' title='".$author."'/>");
                 echo("</div>");
 

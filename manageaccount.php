@@ -1,4 +1,5 @@
 <?php 
+include('include/manage-db.php');
 if (!empty($_POST)){
 	//HANDLE REMOVE ACCOUNT !!
 	session_start();
@@ -8,11 +9,7 @@ if (!empty($_POST)){
 	$password = htmlspecialchars($_POST['password']);
 
 	// CSELECT CURRENT USER
-	try{
-		$bdd = new PDO('mysql:host=localhost;dbname=mystWebsite;charset=utf8','root', '');
-	} catch (Exception $e) {
-		die('Erreur : ' . $e->getMessage());
-	}
+	$bdd = getdb();
 	$user = $bdd->prepare('SELECT * FROM users WHERE username=?');
 	$user->execute(array($username));
 	$user = $user->fetch();
