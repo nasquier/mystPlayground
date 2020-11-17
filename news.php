@@ -1,11 +1,12 @@
 <?php  
-include('include/manage-db.php');
 if(!isset($_SESSION)) { 
 	session_start(); 
 }
-
+include('include/manage-db.php');
 $bdd = getdb();
 
+
+// Add post to database
 if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['title']) && isset($_POST['content'])) { 
 
 	$username = htmlspecialchars($_SESSION["username"]);
@@ -19,6 +20,10 @@ if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['title']) && is
 		'content'=>$_POST['content'],
 		'author_id'=>$user_id));
 } 
+
+// Query posts to display
+$query = $bdd->prepare('SELECT * FROM posts LIMIT 0,10');
+$query->execute();
 ?>
 
 <!DOCTYPE html>
@@ -32,8 +37,12 @@ if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['title']) && is
 	<?php 
 	include('parts/header.php'); 
 	include('parts/main-menu.php');
+
+	//  Post area
 	if (!isset($_SESSION["username"])){
-		echo("<div class='home-message'><em> You must be connected to write a post. </em></div>");
+	?>
+		<div class='home-message'><em> You must be connected to write a post. </em></div>
+	<?php
 	}
 	else {
 		?>
@@ -53,13 +62,10 @@ if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['title']) && is
 	?>
 
 	<?php
-	$query = $bdd->prepare('SELECT * FROM posts LIMIT 0,10');
-	$query->execute();
-
 	while ($post = $query->fetch()){
-		echo("<section>");
-		$author_id = $post['author_id'];
 
+		// Gather post author data
+		$author_id = $post['author_id'];
 		$query_author = $bdd->prepare('SELECT * FROM users WHERE id=?');
 		$query_author->execute(array($author_id));
 		$author_data = $query_author->fetch();
@@ -70,6 +76,7 @@ if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['title']) && is
 			$author_pfp_path = "images/default-pfp.jpg";
 		}
 
+		// Count comments on post and format comment text
 		$query_ncomment = $bdd->prepare('SELECT count(*) FROM posts_comments WHERE post_id=?');
 		$query_ncomment->execute(array($post['id']));
 		$ncomment = $query_ncomment->fetchColumn();
@@ -84,23 +91,26 @@ if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['title']) && is
 			$comment_text = "Comment or read all ".$ncomment." comments";
 			break;
 		}
+		?>
 
-		echo("<div class='post-author'>");
-		echo("<div class='post-pfp'>");
-		echo("<img class='roundpic' src='".$author_pfp_path."' title='".$author."'/>");
-		echo("</div>");
-		echo("<div>");
+		<!-- Display comment -->
+		<section>
+		<div class='post-author'>
+		<div class='post-pfp'>
+			<?php echo("<img class='roundpic' src='".$author_pfp_path."' title='".$author."'/>"); ?>
+		</div>
+		<div>
+		<?php
 		echo("<h1>".$post['title']."</h1>");
 		echo("<h3> <b>".date('Y-m-d, H:i:s',strtotime($post['post_date']))." :</b></h3>");
 		echo('<p>'.$post['content'].'</p></br>');
 		echo("<a href='comments.php?post_id=".$post['id']."'>".$comment_text."</a>");
-		echo("</div>");
-		echo("</div>");
-
-
-		echo("</section>");
+		?>
+		</div>
+		</div>
+		</section>
+		<?php
 	}
-	$query->closeCursor();
 	?>
 </body>
 </html>

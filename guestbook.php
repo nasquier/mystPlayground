@@ -1,10 +1,11 @@
 <?php  
-include('include/manage-db.php');
 if(!isset($_SESSION)) { 
     session_start(); 
 }
-
+include('include/manage-db.php');
 $bdd = getdb();
+
+// Add entry to guest book
 if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['message'])) { 
     $username = htmlspecialchars($_SESSION["username"]);
     $query = $bdd->prepare('SELECT id FROM users WHERE username=?');
@@ -15,6 +16,10 @@ if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['message'])) {
         'message'=>$_POST['message'],
         'author_id'=>$user_id));
 } 
+
+// Query guestbook entries
+$query = $bdd->prepare('SELECT * FROM guestbook LIMIT 0,10');
+$query->execute();
 ?>
 
 <!DOCTYPE html>
@@ -28,8 +33,12 @@ if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['message'])) {
 	<?php 
     include('parts/header.php'); 
     include('parts/main-menu.php');
+
+    // Guestbook post area
     if (!isset($_SESSION["username"])){
-        echo("<div class='home-message'><em> You must be connected to write in the guestbook. </em></div>");
+        ?>
+        <div class='home-message'><em> You must be connected to write in the guestbook. </em></div>
+        <?php
     }
     else {
         ?>
@@ -47,15 +56,16 @@ if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['message'])) {
 
     <section>
         <?php
-        $query = $bdd->prepare('SELECT * FROM guestbook LIMIT 0,10');
-        $query->execute();
-
         while ($guestbook_entry = $query->fetch()){
             if (!isset($author_id) || $guestbook_entry['author_id']!=$author_id){
                 if (isset($author_id)){
-                    echo("</div>");
-                    echo("</div>");
+                    ?> 
+                    </div> 
+                    </div> 
+                    <?php
                 }
+
+                // Gather author data
                 $author_id = $guestbook_entry['author_id'];
 
                 $query_author = $bdd->prepare('SELECT * FROM users WHERE id=?');
@@ -67,24 +77,24 @@ if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['message'])) {
                 if ($author_pfp_path == ""){
                     $author_pfp_path = "images/default-pfp.jpg";
                 }
-                echo("<div class='post-author'>");
-                
-                echo("<div class='post-pfp'>");
-                echo("<img class='roundpic' src='".$author_pfp_path."' title='".$author."'/>");
-                echo("</div>");
+                ?>
 
-                echo("<div>");
+                <!-- Display author pfp -->
+                <div class='post-author'>
+                <div class='post-pfp'>
+                <?php echo("<img class='roundpic' src='".$author_pfp_path."' title='".$author."'/>"); ?>
+                </div>
+                <div>
+                <?php
             }
 
+            // Display all posts from author until it changes
             echo("<p> <b>".date('Y-m-d, H:i:s',strtotime($guestbook_entry['post_date']))." :</b><br/>");
             echo($guestbook_entry['message'].'</p>');
         }
-        echo("</div>");
-        echo("</div>");
-        $query->closeCursor();
-    // CHARGER 10 MESSAGES
-    // Paginer les messages
         ?>
+        </div>
+        </div>
     </section>
 </body>
 </html>

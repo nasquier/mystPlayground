@@ -1,10 +1,7 @@
 <?php  
 if(!isset($_SESSION)) { 
     session_start(); 
-}  
-if (isset($_SESSION["user_connected"])){
-    $message = "Nice to see you, ".htmlspecialchars($_SESSION["user_connected"])."."; 
-}
+} 
 ?>
 <!DOCTYPE html>
 <html>

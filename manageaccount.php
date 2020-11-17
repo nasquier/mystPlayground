@@ -93,14 +93,18 @@ if (!empty($_POST)){
 	<section>
 		<form method='post' action='manageaccount.php' enctype='multipart/form-data'>
 			<fieldset>
-				<legend> <?php echo($_SESSION["username"]); ?>'s account management </legend>
+				<?php echo("<legend> ".$_SESSION['username']."'s account management </legend>"); ?>
 
 				<label> Username </label>
-				<input type='text' name='username' readonly title='Non-editable' value=<?php echo("'".$_SESSION["username"]."'");?> ><br/>
+				<?php echo("<input type='text' name='username' readonly title='Non-editable' value='".$_SESSION["username"]."'>");?> 
+				<br/>
 
 				<label> Email </label>
-				<input type='email' name='email'
-				value=<?php if (isset($email)) echo("'".$email."'"); else echo("'".$_SESSION["user_email"]."'"); ?> 
+				<input type='email' name='email' value=
+				<?php 
+				if (isset($email)) echo("'".$email."'"); 
+				else echo("'".$_SESSION["user_email"]."'"); 
+				?> 
 				maxlength=100  title="Please enter a valid email adress."/><br/>
 
 				<label> Profile picture </label>
