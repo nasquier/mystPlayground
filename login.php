@@ -19,6 +19,10 @@ if (!empty($_POST)){
 			if ($_SESSION["user_pfp"]==""){
 				$_SESSION["user_pfp"]="images/default-pfp.jpg";
 			}
+			if (isset($_POST['setcookies'])){
+				setcookie('username', $username, time()+60*60*24,null,null,false,true);
+				setcookie('pwd_hash', $password, time()+60*60*24,null,null,false,true); 
+			}
 			header("Location: index.php");			
 			exit();
 		}
@@ -53,7 +57,9 @@ if (!empty($_POST)){
 				/><br/>
 				<label> Password </label>
 				<input type='password' name='password' required/><br/>
-				<p><input type='submit' value='Sign in' />
+				<p>
+					<input type='checkbox' name='setcookies'/> Remember me<br/>
+					<input type='submit' value='Sign in' />
 					<em> <?php if (isset($error_message)) echo($error_message); ?> </em>
 				</p>
 			</fieldset>

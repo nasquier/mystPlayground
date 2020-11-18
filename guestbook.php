@@ -1,7 +1,5 @@
 <?php  
-if(!isset($_SESSION)) { 
-    session_start(); 
-}
+include('include/user-autoconnect.php');
 include('include/manage-db.php');
 $bdd = getdb();
 
@@ -74,8 +72,6 @@ $query->execute();
                 }
 
                 // Gather data
-                $message = $guestbook_entry['message'];
-                $post_date = $guestbook_entry['post_date'];
                 $author = $guestbook_entry['username'];
                 $author_pfp_path = $guestbook_entry['pfp_path'];
                 if ($author_pfp_path == ""){
@@ -93,6 +89,8 @@ $query->execute();
             }
 
             // Display all posts from author until it changes
+            $message = $guestbook_entry['message'];
+            $post_date = $guestbook_entry['post_date'];
             echo("<p> <b>".date('Y-m-d, H:i:s',strtotime($post_date))." :</b><br/>
                 ".$message.'</p>');
         }

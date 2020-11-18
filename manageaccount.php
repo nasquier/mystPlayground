@@ -62,6 +62,12 @@ if (!empty($_POST)){
 				$_SESSION["user_pfp"]="images/default-pfp.jpg";
 			}
 
+			// SET COOKIES
+			if ($_COOKIE['username']!="" && $_COOKIE['pwd_hash']!=""){
+				setcookie('username', $username, time() + 365*24,null,null,false,true);
+				setcookie('pwd_hash', $password, time() + 365*24,null,null,false,true);
+			} 
+
 			header("Location: index.php?message_id=1");
 			exit();
 

@@ -1,7 +1,5 @@
 <?php  
-if(!isset($_SESSION)) { 
-	session_start(); 
-}  
+include('include/user-autoconnect.php');
 ?>
 <nav class='main-menu'>
 	<label><a href='../index.php'> Home </a></label>

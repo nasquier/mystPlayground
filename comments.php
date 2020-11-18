@@ -1,7 +1,5 @@
 <?php  
-if(!isset($_SESSION)) { 
-	session_start(); 
-}
+include('include/user-autoconnect.php');
 include('include/manage-db.php');
 $bdd = getdb();
 

@@ -1,7 +1,5 @@
 <?php  
-if(!isset($_SESSION)) { 
-	session_start(); 
-}  
+include('include/user-autoconnect.php');
 ?>
 <header>
 	<h1><a href='index.php'>myst playground</a></h1>
