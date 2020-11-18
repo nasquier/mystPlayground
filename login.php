@@ -12,6 +12,7 @@ if (!empty($_POST)){
 		$users_list = $users_list->fetch();
 		if ($users_list['password']==$password){
 			session_start();
+			$_SESSION["user_id"] = $users_list['id'];
 			$_SESSION["username"] = $users_list['username'];
 			$_SESSION["user_email"] = $users_list['email'];
 			$_SESSION["user_pfp"] = $users_list['pfp_path'];

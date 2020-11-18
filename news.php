@@ -10,9 +10,7 @@ $bdd = getdb();
 if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['title']) && isset($_POST['content'])) { 
 
 	$username = htmlspecialchars($_SESSION["username"]);
-	$query = $bdd->prepare('SELECT id FROM users WHERE username=?');
-	$query->execute(array($username));
-	$user_id = $query->fetchColumn();
+	$user_id = htmlspecialchars($_SESSION["user_id"]);
 
 	$query = $bdd->prepare('INSERT INTO posts(title,content,author_id) VALUES (:title,:content,:author_id)');
 	$query->execute(array(
@@ -22,8 +20,18 @@ if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['title']) && is
 } 
 
 // Query posts to display
-$query = $bdd->prepare('SELECT * FROM posts LIMIT 0,10');
+$query = $bdd->prepare('
+	SELECT p.*, u.username, u.pfp_path, c.ncomment 
+	FROM posts AS p 
+	INNER JOIN users AS u ON p.author_id=u.id 
+	LEFT JOIN ( 
+    	SELECT post_id,count(*) AS ncomment 
+    	FROM posts_comments 
+    	GROUP BY post_id
+	) AS c ON p.id = c.post_id
+	');
 $query->execute();
+
 ?>
 
 <!DOCTYPE html>
@@ -63,24 +71,18 @@ $query->execute();
 
 	<?php
 	while ($post = $query->fetch()){
-
-		// Gather post author data
-		$author_id = $post['author_id'];
-		$query_author = $bdd->prepare('SELECT * FROM users WHERE id=?');
-		$query_author->execute(array($author_id));
-		$author_data = $query_author->fetch();
-
-		$author = $author_data['username'];
-		$author_pfp_path = $author_data['pfp_path'];
+		// Gather data
+		$post_id = $post['id'];
+		$author = $post['username'];
+		$post_date = $post['post_date'];
+		$author_pfp_path = $post['pfp_path'];
 		if ($author_pfp_path == ""){
 			$author_pfp_path = "images/default-pfp.jpg";
 		}
 
-		// Count comments on post and format comment text
-		$query_ncomment = $bdd->prepare('SELECT count(*) FROM posts_comments WHERE post_id=?');
-		$query_ncomment->execute(array($post['id']));
-		$ncomment = $query_ncomment->fetchColumn();
-		switch ($ncomment){
+		// Format comment text
+		$ncomment = $post['ncomment'];
+		switch ($post['ncomment']){
 			case 0:
 			$comment_text = "Comment";
 			break;
@@ -102,9 +104,9 @@ $query->execute();
 		<div>
 		<?php
 		echo("<h1>".$post['title']."</h1>");
-		echo("<h3> <b>".date('Y-m-d, H:i:s',strtotime($post['post_date']))." :</b></h3>");
+		echo("<h3> <b>".date('Y-m-d, H:i:s',strtotime($post_date))." :</b></h3>");
 		echo('<p>'.$post['content'].'</p></br>');
-		echo("<a href='comments.php?post_id=".$post['id']."'>".$comment_text."</a>");
+		echo("<a href='comments.php?post_id=".$post_id."'>".$comment_text."</a>");
 		?>
 		</div>
 		</div>

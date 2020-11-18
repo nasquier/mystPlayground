@@ -8,9 +8,7 @@ $bdd = getdb();
 // Add entry to guest book
 if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['message'])) { 
     $username = htmlspecialchars($_SESSION["username"]);
-    $query = $bdd->prepare('SELECT id FROM users WHERE username=?');
-    $query->execute(array($username));
-    $user_id = $query->fetchColumn();
+    $user_id = htmlspecialchars($_SESSION["user_id"]);
     $query = $bdd->prepare('INSERT INTO guestbook(message,author_id) VALUES (:message,:author_id)');
     $query->execute(array(
         'message'=>$_POST['message'],
@@ -19,6 +17,15 @@ if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['message'])) {
 
 // Query guestbook entries
 $query = $bdd->prepare('SELECT * FROM guestbook LIMIT 0,10');
+$query->execute();
+
+$query = $bdd->prepare('
+    SELECT g.*, u.username, u.pfp_path
+    FROM guestbook AS g 
+    INNER JOIN users AS u ON g.author_id=u.id 
+    ORDER BY g.post_date
+    LIMIT 10
+    ');
 $query->execute();
 ?>
 
@@ -57,23 +64,20 @@ $query->execute();
     <section>
         <?php
         while ($guestbook_entry = $query->fetch()){
-            if (!isset($author_id) || $guestbook_entry['author_id']!=$author_id){
-                if (isset($author_id)){
+            if (!isset($author) || $guestbook_entry['username']!=$author){
+                // This is to or
+                if (isset($author)){
                     ?> 
                     </div> 
                     </div> 
                     <?php
                 }
 
-                // Gather author data
-                $author_id = $guestbook_entry['author_id'];
-
-                $query_author = $bdd->prepare('SELECT * FROM users WHERE id=?');
-                $query_author->execute(array($author_id));
-                $userlist = $query_author->fetch();
-
-                $author = $userlist['username'];
-                $author_pfp_path = $userlist['pfp_path'];
+                // Gather data
+                $message = $guestbook_entry['message'];
+                $post_date = $guestbook_entry['post_date'];
+                $author = $guestbook_entry['username'];
+                $author_pfp_path = $guestbook_entry['pfp_path'];
                 if ($author_pfp_path == ""){
                     $author_pfp_path = "images/default-pfp.jpg";
                 }
@@ -89,8 +93,8 @@ $query->execute();
             }
 
             // Display all posts from author until it changes
-            echo("<p> <b>".date('Y-m-d, H:i:s',strtotime($guestbook_entry['post_date']))." :</b><br/>");
-            echo($guestbook_entry['message'].'</p>');
+            echo("<p> <b>".date('Y-m-d, H:i:s',strtotime($post_date))." :</b><br/>
+                ".$message.'</p>');
         }
         ?>
         </div>

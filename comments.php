@@ -5,23 +5,25 @@ if(!isset($_SESSION)) {
 include('include/manage-db.php');
 $bdd = getdb();
 
-// Comment to display
+// Post to display
 $post_id = htmlspecialchars($_GET['post_id']);
 
 
 // Get post information
-$query_post = $bdd->prepare('SELECT * FROM posts WHERE id=?');
+$query_post = $bdd->prepare('
+	SELECT p.*, u.username, u.pfp_path 
+	FROM posts AS p 
+	INNER JOIN users AS u
+	ON p.author_id=u.id
+	WHERE p.id=?');
 $query_post->execute(array($post_id));
 $post = $query_post->fetch();
 
-
-// Get post author information
-$author_id = $post['author_id'];
-$query_author = $bdd->prepare('SELECT * FROM users WHERE id=?');
-$query_author->execute(array($author_id));
-$author_data = $query_author->fetch();
-$author = $author_data['username'];
-$author_pfp_path = $author_data['pfp_path'];
+$post_title = $post['title'];
+$post_content = $post['content'];
+$post_date = $post['post_date'];
+$author = $post['username'];
+$author_pfp_path = $post['pfp_path'];
 if ($author_pfp_path == ""){
 	$author_pfp_path = "images/default-pfp.jpg";
 }
@@ -29,11 +31,7 @@ if ($author_pfp_path == ""){
 // Adding comment to DB
 if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['comment'])) { 
 	$comment = htmlspecialchars($_POST['comment']);
-
-	$username = htmlspecialchars($_SESSION["username"]);
-	$query_id = $bdd->prepare('SELECT id FROM users WHERE username=?');
-	$query_id->execute(array($username));
-	$user_id = $query_id->fetchColumn();
+	$user_id = htmlspecialchars($_SESSION["user_id"]);
 
 	$query = $bdd->prepare('INSERT INTO posts_comments(post_id,author_id,content) VALUES (:post_id,:author_id,:content)');
 	$query->execute(array(
@@ -43,7 +41,14 @@ if(isset($_SESSION['username']) && isset($_POST) && isset($_POST['comment'])) {
 }
 
 // Query comments to display
-$query_comments =  $bdd->prepare('SELECT * FROM posts_comments WHERE post_id=? ORDER BY post_date LIMIT 0,10');
+$query_comments =  $bdd->prepare('
+	SELECT c.content, c.post_date, u.username, u.pfp_path 
+	FROM posts_comments AS c 
+	INNER JOIN users AS u ON c.author_id=u.id 
+	WHERE c.post_id=? 
+	ORDER BY c.post_date 
+	LIMIT 0,10
+	');
 $query_comments->execute(array($post_id)); 
 ?>
 
@@ -69,9 +74,9 @@ $query_comments->execute(array($post_id));
 			</div>
 			<div>
 				<?php 
-				echo("<h1>".$post['title']."</h1>");
-				echo("<h3> <b>".date('Y-m-d, H:i:s',strtotime($post['post_date']))." :</b></h3>"); 
-				echo('<p>'.$post['content'].'</p></br>');
+				echo("<h1>".$post_title."</h1>");
+				echo("<h3> <b>".date('Y-m-d, H:i:s',strtotime($post_date))." :</b></h3>"); 
+				echo('<p>'.$post_content.'</p></br>');
 				?>
 			</div>
 		</div>
@@ -79,15 +84,11 @@ $query_comments->execute(array($post_id));
 
 	<?php
 	while ($comment = $query_comments->fetch()){
-		$commenter_id = $comment['author_id'];
-
-		// Gather commenter info
-		$query_commenter = $bdd->prepare('SELECT * FROM users WHERE id=?');
-		$query_commenter->execute(array($commenter_id));
-		$commenter_data = $query_commenter->fetch();
-
-		$commenter = $commenter_data['username'];
-		$commenter_pfp_path = $commenter_data['pfp_path'];
+		// Gather data
+		$commenter = $comment['username'];
+		$comment_date = $comment['post_date'];
+		$comment_content = $comment['content'];
+		$commenter_pfp_path = $comment['pfp_path'];
 		if ($commenter_pfp_path == ""){
 			$commenter_pfp_path = "images/default-pfp.jpg";
 		}
@@ -101,8 +102,8 @@ $query_comments->execute(array($post_id));
 				</div>
 				<div>
 					<?php
-					echo("<h3> <b>".date('Y-m-d, H:i:s',strtotime($comment['post_date']))." :</b></h3>");
-					echo('<p>'.$comment['content'].'</p></br>');
+					echo("<h3> <b>".date('Y-m-d, H:i:s',strtotime($comment_date))." :</b></h3>");
+					echo('<p>'.$comment_content.'</p></br>');
 					?>
 				</div>
 			</div>
