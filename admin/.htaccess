@@ -1,0 +1,4 @@
+AuthName "Protected admin page"
+AuthType Basic
+AuthUserFile "/var/www/mystPlayground/admin/.htpasswd"
+Require user myst
