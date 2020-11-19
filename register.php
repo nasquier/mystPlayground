@@ -3,7 +3,7 @@ include('include/manage-db.php');
 if (!empty($_POST)){
 	$username = htmlspecialchars($_POST['username']);
 	$email = htmlspecialchars($_POST['email']);
-	$password = htmlspecialchars($_POST['password']);
+	$pwd_hash = password_hash(htmlspecialchars($_POST['password']), PASSWORD_DEFAULT);
 
 	$bdd = getdb();
 
@@ -23,7 +23,7 @@ if (!empty($_POST)){
 		$query->execute(array(
 			'username'=>$username,
 			'email'=>$email,
-			'password'=>$password,
+			'password'=>$pwd_hash,
 			'pfp_path'=>$pfp_path));
 
 		$message = 'Successfully registered as '.$username.'.';

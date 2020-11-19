@@ -1,11 +1,8 @@
 <?php 
 include('include/manage-db.php');
 if (!empty($_POST)){
-	//HANDLE REMOVE ACCOUNT !!
 	session_start();
 	$username = htmlspecialchars($_SESSION["username"]);
-	$email = htmlspecialchars($_POST['email']);
-	$new_password = htmlspecialchars($_POST['new_password']);
 	$password = htmlspecialchars($_POST['password']);
 
 	// CSELECT CURRENT USER
@@ -15,7 +12,7 @@ if (!empty($_POST)){
 	$user = $user->fetch();
 
 	// CHECK PASSWORD
-	if ($user['password']==$password){
+	if (password_verify($password, $user['password'])){
 
 		// UPDATE ACCOUNT
 		if (isset($_POST['update'])){
@@ -26,9 +23,7 @@ if (!empty($_POST)){
 				$email=$user['email'];
 			}
 			if (!empty($_POST['new_password'])){ 
-				$password=htmlspecialchars($_POST['new_password']); 
-			} else {
-				$password=$user['password'];
+				$pwd_hash=password_hash($new_password, PASSWORD_DEFAULT);
 			}
 
 			if (isset($_POST['rm_pfp'])){
@@ -52,7 +47,7 @@ if (!empty($_POST)){
 			$update_user->execute(array(
 				'username'=>$username,
 				'email'=>$email,
-				'new_password'=>$password,
+				'new_password'=>$pwd_hash,
 				'pfp_path'=>$pfp_path));
 
 			// UPDATE SESSION
@@ -65,13 +60,14 @@ if (!empty($_POST)){
 			// SET COOKIES
 			if ($_COOKIE['username']!="" && $_COOKIE['pwd_hash']!=""){
 				setcookie('username', $username, time() + 365*24,null,null,false,true);
-				setcookie('pwd_hash', $password, time() + 365*24,null,null,false,true);
+				setcookie('pwd_hash', $pwd_hash, time() + 365*24,null,null,false,true);
 			} 
 
 			header("Location: index.php?message_id=1");
 			exit();
 
 		} elseif (isset($_POST['delete'])) {
+			// REMOVE ACCOUNT
 			$delete_user = $bdd->prepare('DELETE from users WHERE username=:username');
 			$delete_user->execute(array('username'=>$username));
 			session_destroy();
