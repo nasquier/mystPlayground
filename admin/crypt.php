@@ -13,7 +13,7 @@ else // On n'a pas encore rempli le formulaire
 <form method="post">
     <p>
         Login : <input type="text" name="login"><br />
-        Password : <input type="text" name="pass"><br /><br />
+        Password : <input type="password" name="pass"><br /><br />
     
         <input type="submit" value="Encrypt">
     </p>

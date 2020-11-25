@@ -1,6 +1,6 @@
 <?php  
-include('include/user-autoconnect.php');
 include('include/manage-db.php');
+include('parts/user-autoconnect.php');
 $bdd = getdb();
 
 // Add entry to guest book

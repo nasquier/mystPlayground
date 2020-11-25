@@ -1,5 +1,6 @@
 <?php  
-include('include/user-autoconnect.php');
+include('include/manage-db.php');
+include('parts/user-autoconnect.php');
 if (isset($_GET) && isset($_GET['message_id']) && is_numeric($_GET['message_id'])){
     switch ((int)htmlspecialchars($_GET['message_id'])){
         case 0:

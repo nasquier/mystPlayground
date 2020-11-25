@@ -10,7 +10,6 @@ if (!empty($_POST)){
 
 	if ($user->rowCount()){
 		$user = $user->fetch();
-
 		if (password_verify($password,$user['password'])){
 			ini_set('session.cookie_lifetime', 0); 
 			session_set_cookie_params(0);
@@ -26,7 +25,7 @@ if (!empty($_POST)){
 
 			if (isset($_POST['setcookies'])){
 				setcookie('username', $username, time()+60*60*24,null,null,false,true);
-				setcookie('pwd_hash', password_hash($password, PASSWORD_DEFAULT), time()+60*60*24,null,null,false,true); 
+				setcookie('pwd_hash', $password, time()+60*60*24,null,null,false,true); 
 			}
 
 			header('Location: index.php');			
@@ -64,7 +63,7 @@ if (!empty($_POST)){
 				<label> Password </label>
 				<input type='password' name='password' required/><br/>
 				<p>
-					<input type='checkbox' name='setcookies'/> Remember me<br/>
+					<input type='checkbox' name='setcookies'/> Remember me (NOT SECURE AT THE MOMENT)<br/>
 					<input type='submit' value='Sign in' />
 					<em> <?php if (isset($error_message)) echo($error_message); ?> </em>
 				</p>

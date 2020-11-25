@@ -5,17 +5,13 @@ if(!isset($_SESSION)) {
 	session_start();
 }
 if (empty($_SESSION) && isset($_COOKIE['username']) && isset($_COOKIE['pwd_hash'])){
-	include('manage-db.php');
 	$bdd = getdb();
 
-	$username = htmlspecialchars($_COOKIE['username']);
-	$pwd_hash = htmlspecialchars($_COOKIE['pwd_hash']);
-
 	$user = $bdd->prepare('SELECT * FROM users WHERE username=?');
-	$user->execute(array($username));
+	$user->execute(array(htmlspecialchars($_COOKIE['username'])));
 	if ($user->rowCount()){
 		$user = $user->fetch();
-		if ($user['password']==$pwd_hash){
+		if (password_verify(htmlspecialchars($_COOKIE['pwd_hash']),$user['password'])){
 			$_SESSION["user_id"] = $user['id'];
 			$_SESSION["username"] = $user['username'];
 			$_SESSION["user_email"] = $user['email'];

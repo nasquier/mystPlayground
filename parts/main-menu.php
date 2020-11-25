@@ -1,5 +1,5 @@
 <?php  
-include('include/user-autoconnect.php');
+include('parts/user-autoconnect.php');
 ?>
 <nav class='main-menu'>
 	<label><a href='../index.php'> Home </a></label>

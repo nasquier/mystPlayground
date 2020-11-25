@@ -1,5 +1,6 @@
 <?php  
-include('include/user-autoconnect.php');
+include('include/manage-db.php');
+include('parts/user-autoconnect.php');
 ?>
 <!DOCTYPE html>
 <html>

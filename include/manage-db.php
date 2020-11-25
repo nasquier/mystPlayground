@@ -1,7 +1,7 @@
 <?php
 function getdb(){
 	try{
-		$bdd = new PDO('mysql:host=localhost;dbname=mystPlayground;charset=utf8','root', '');
+		$bdd = new PDO('mysql:host=localhost;dbname=mystPlayground;charset=utf8','guest', 'welcome2MYSTplayground!');
 	}
 	catch (Exception $e)
 	{

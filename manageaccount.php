@@ -23,7 +23,9 @@ if (!empty($_POST)){
 				$email=$user['email'];
 			}
 			if (!empty($_POST['new_password'])){ 
-				$pwd_hash=password_hash($new_password, PASSWORD_DEFAULT);
+				$pwd_hash=password_hash($new_password, PASSWORD_BCRYPT );
+			} else {
+				$pwd_hash=password_hash($password, PASSWORD_BCRYPT );
 			}
 
 			if (isset($_POST['rm_pfp'])){

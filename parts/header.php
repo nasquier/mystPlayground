@@ -1,5 +1,5 @@
 <?php  
-include('include/user-autoconnect.php');
+include('parts/user-autoconnect.php');
 ?>
 <header>
 	<h1><a href='index.php'>myst playground</a></h1>

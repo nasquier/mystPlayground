@@ -3,7 +3,7 @@ include('include/manage-db.php');
 if (!empty($_POST)){
 	$username = htmlspecialchars($_POST['username']);
 	$email = htmlspecialchars($_POST['email']);
-	$pwd_hash = password_hash(htmlspecialchars($_POST['password']), PASSWORD_DEFAULT);
+	$pwd_hash = password_hash(htmlspecialchars($_POST['password']), PASSWORD_BCRYPT);
 
 	$bdd = getdb();
 
